@@ -7,28 +7,26 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
-// Middleware
+
 app.use(express.json());
 app.use(express.static("public"));
 
-// ===== TEST ROUTE =====
 app.get("/", (req, res) => {
     res.send("Server is working");
 });
 
-// ===== OPENWEATHER API =====
+
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
 
 app.get("/api/weather", async (req, res) => {
     try {
         const city = req.query.city;
 
-        // Validation
         if (!city) {
             return res.status(400).json({ error: "City is required" });
         }
 
-        // Request to OpenWeather
+
         const response = await fetch(
             `${WEATHER_URL}?q=${city}&appid=${process.env.OPENWEATHER_API_KEY}&units=metric`
         );
@@ -39,7 +37,6 @@ app.get("/api/weather", async (req, res) => {
 
         const data = await response.json();
 
-        // Response to frontend
         res.json({
             city: data.name,
             country: data.sys.country,
@@ -63,19 +60,18 @@ app.get("/api/weather", async (req, res) => {
     }
 });
 
-// ===== NEWS API (Additional API #1) =====
+
 const NEWS_URL = "https://newsapi.org/v2/everything";
 
 app.get("/api/news", async (req, res) => {
     try {
         const city = req.query.city || "world";
 
-        // Validation
+
         if (!city) {
             return res.status(400).json({ error: "City parameter is required" });
         }
 
-        // Request to News API
         const response = await fetch(
             `${NEWS_URL}?q=${city}&language=en&sortBy=publishedAt&pageSize=5&apiKey=${process.env.NEWS_API_KEY}`
         );
@@ -86,7 +82,6 @@ app.get("/api/news", async (req, res) => {
 
         const data = await response.json();
 
-        // Response to frontend
         res.json({
             articles: data.articles.map(article => ({
                 title: article.title,
@@ -104,19 +99,19 @@ app.get("/api/news", async (req, res) => {
     }
 });
 
-// ===== EXCHANGE RATE API (Additional API #2) =====
+
 const EXCHANGE_URL = "https://api.exchangerate-api.com/v4/latest";
 
 app.get("/api/currency", async (req, res) => {
     try {
         const base = req.query.base || "USD";
 
-        // Validation
+
         if (!base) {
             return res.status(400).json({ error: "Base currency is required" });
         }
 
-        // Request to Exchange Rate API
+
         const response = await fetch(`${EXCHANGE_URL}/${base}`);
 
         if (!response.ok) {
@@ -125,7 +120,6 @@ app.get("/api/currency", async (req, res) => {
 
         const data = await response.json();
 
-        // Response to frontend - showing main currencies
         res.json({
             base: data.base,
             date: data.date,
@@ -146,12 +140,11 @@ app.get("/api/currency", async (req, res) => {
     }
 });
 
-// ===== ERROR HANDLING =====
 app.use((req, res) => {
     res.status(404).json({ error: "Endpoint not found" });
 });
 
-// ===== START SERVER =====
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
