@@ -33,7 +33,7 @@ header p {
     opacity: 0.9;
 }
 
-/* Search Section */
+
 .search-section {
     display: flex;
     gap: 10px;
@@ -69,7 +69,7 @@ header p {
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
 
-/* Messages */
+
 .error-message {
     display: none;
     background: #f44336;
@@ -101,7 +101,7 @@ header p {
     display: block;
 }
 
-/* Content Grid */
+
 .content-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -133,7 +133,7 @@ header p {
     padding: 20px;
 }
 
-/* Weather Card */
+
 .weather-info {
     display: grid;
     gap: 15px;
@@ -193,14 +193,14 @@ header p {
     font-weight: bold;
 }
 
-/* Map */
+
 #map {
     height: 400px;
     border-radius: 10px;
     overflow: hidden;
 }
 
-/* News Card */
+
 .news-list {
     display: flex;
     flex-direction: column;
@@ -245,7 +245,7 @@ header p {
     color: #999;
 }
 
-/* Currency Card */
+
 .currency-info {
     display: grid;
     gap: 10px;
@@ -295,15 +295,9 @@ header p {
     font-weight: bold;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    color: white;
-    padding: 20px;
-    font-size: 1rem;
-}
 
-/* Responsive Design */
+
+
 @media (max-width: 768px) {
     header h1 {
         font-size: 2rem;
