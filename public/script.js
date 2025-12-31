@@ -1,8 +1,7 @@
-// Global variables
+
 let map = null;
 let marker = null;
 
-// DOM Elements
 const cityInput = document.getElementById('cityInput');
 const searchBtn = document.getElementById('searchBtn');
 const errorMessage = document.getElementById('errorMessage');
@@ -11,7 +10,7 @@ const weatherContent = document.getElementById('weatherContent');
 const newsContent = document.getElementById('newsContent');
 const currencyContent = document.getElementById('currencyContent');
 
-// Initialize map
+
 function initMap() {
     map = L.map('map').setView([51.505, -0.09], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -19,7 +18,7 @@ function initMap() {
     }).addTo(map);
 }
 
-// Show/Hide messages
+
 function showError(message) {
     errorMessage.textContent = message;
     errorMessage.classList.add('show');
@@ -36,7 +35,7 @@ function showLoading(show) {
     }
 }
 
-// Update map location
+
 function updateMap(lat, lon, cityName) {
     if (map) {
         map.setView([lat, lon], 13);
@@ -51,7 +50,7 @@ function updateMap(lat, lon, cityName) {
     }
 }
 
-// Fetch weather data
+
 async function fetchWeather(city) {
     try {
         const response = await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
@@ -71,7 +70,6 @@ async function fetchWeather(city) {
     }
 }
 
-// Display weather data
 function displayWeather(data) {
     const iconUrl = `https://openweathermap.org/img/wn/${data.icon}@2x.png`;
 
@@ -114,7 +112,7 @@ function displayWeather(data) {
     `;
 }
 
-// Fetch news data
+
 async function fetchNews(city) {
     try {
         const response = await fetch(`/api/news?city=${encodeURIComponent(city)}`);
@@ -133,7 +131,6 @@ async function fetchNews(city) {
     }
 }
 
-// Display news data
 function displayNews(data) {
     if (!data.articles || data.articles.length === 0) {
         newsContent.innerHTML = '<p class="placeholder">No news found for this city</p>';
@@ -155,7 +152,7 @@ function displayNews(data) {
     newsContent.innerHTML = `<div class="news-list">${newsHTML}</div>`;
 }
 
-// Fetch currency data
+
 async function fetchCurrency() {
     try {
         const response = await fetch('/api/currency?base=USD');
@@ -174,7 +171,7 @@ async function fetchCurrency() {
     }
 }
 
-// Display currency data
+
 function displayCurrency(data) {
     const ratesHTML = Object.entries(data.rates).map(([code, rate]) => `
         <div class="currency-item">
@@ -196,7 +193,7 @@ function displayCurrency(data) {
     `;
 }
 
-// Main search function
+
 async function handleSearch() {
     const city = cityInput.value.trim();
 
@@ -208,7 +205,7 @@ async function handleSearch() {
     showLoading(true);
 
     try {
-        // Fetch all data
+
         await Promise.all([
             fetchWeather(city),
             fetchNews(city)
@@ -220,7 +217,6 @@ async function handleSearch() {
     }
 }
 
-// Event listeners
 searchBtn.addEventListener('click', handleSearch);
 
 cityInput.addEventListener('keypress', (e) => {
@@ -229,8 +225,8 @@ cityInput.addEventListener('keypress', (e) => {
     }
 });
 
-// Initialize on page load
+
 window.addEventListener('DOMContentLoaded', () => {
     initMap();
-    fetchCurrency(); // Load currency rates on page load
+    fetchCurrency(); 
 });
